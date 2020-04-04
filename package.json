@@ -58,6 +58,14 @@
                 "description": "Allows direnv to load the .envrc."
             }
         ],
+        "languages": [
+            {
+                "id": "shellscript",
+                "filenames": [
+                    ".envrc"
+                ]
+            }
+        ],
         "configuration": {
             "type": "object",
             "title": "direnv",
