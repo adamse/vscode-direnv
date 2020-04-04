@@ -7,8 +7,8 @@ import { Command } from './command';
 
 let oldEnvDiff = {};
 let rpath = vscode.workspace.workspaceFolders[0] ? vscode.workspace.workspaceFolders[0].uri.path : vscode.workspace.rootPath;
-let config = vscode.workspace.getConfiguration("direnv");
-let exepath: string = config.get("executablePath") as string || constants.direnv.cmd;
+let config = vscode.workspace.getConfiguration('direnv');
+let exepath: string = config.get('executablePath') as string || constants.direnv.cmd;
 let command = new Command(exepath, rpath);
 let watcher = vscode.workspace.createFileSystemWatcher(command.rcPath, true);
 let env = vscode.window.getEnvironmentVariableCollection(false);
