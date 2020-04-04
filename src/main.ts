@@ -9,6 +9,7 @@ let oldEnvDiff = {};
 let rpath = vscode.workspace.workspaceFolders[0] ? vscode.workspace.workspaceFolders[0].uri.path : vscode.workspace.rootPath;
 let command = new Command(rpath);
 let watcher = vscode.workspace.createFileSystemWatcher(command.rcPath, true);
+let env = vscode.window.getEnvironmentVariableCollection(false);
 let displayError = (e) =>
     vscode.window.showErrorMessage(constants.messages.error(e));
 let handleError = (t: Thenable<any>) => t.then(undefined, displayError);
@@ -16,7 +17,7 @@ let version = () =>
     command.version().then(v => vscode.window.showInformationMessage(constants.messages.version(v)), displayError);
 let revertFromOption = (option) => {
     if (option === constants.vscode.extension.actions.revert) {
-        utils.assign(process.env, oldEnvDiff);
+        utils.assign(env, oldEnvDiff);
         oldEnvDiff = {};
         vscode.window.showInformationMessage(constants.messages.reverted);
     }
@@ -25,10 +26,10 @@ let assignEnvDiff = (options: { showSuccess: boolean }) => {
     return command.exportJSON().then((envDiff) => {
         Object.keys(envDiff).forEach((key) => {
             if (key.indexOf('DIRENV_') === -1 && oldEnvDiff[key] !== envDiff[key]) {
-                oldEnvDiff[key] = process.env[key];
+                oldEnvDiff[key] = env.get(key);
             }
         });
-        return utils.assign(process.env, envDiff);
+        return utils.assign(env, envDiff);
     }).then(() => {
         if (options.showSuccess) {
             return vscode.window.showInformationMessage(constants.messages.assign.success);
@@ -77,7 +78,7 @@ export function activate(context: vscode.ExtensionContext) {
     context.subscriptions.push(vscode.commands.registerCommand('direnv.version', version));
     context.subscriptions.push(vscode.commands.registerCommand('direnv.view', view));
     context.subscriptions.push(vscode.commands.registerCommand('direnv.allow', allow));
-    assignEnvDiff({ showSuccess: false });
+    assignEnvDiff({ showSuccess: true });
 }
 
 export function deactivate() {

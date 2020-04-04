@@ -2,11 +2,11 @@
     "name": "vscode-direnv",
     "displayName": "direnv",
     "description": "Automatically detect and load .envrc when opening VS Code",
-    "version": "0.0.2",
+    "version": "1.0.1",
     "publisher": "Rubymaniac",
     "license": "MIT",
     "engines": {
-        "vscode": "^1.0.0"
+        "vscode": "^1.44.0"
     },
     "bugs": {
         "url": "https://github.com/rubymaniac/vscode-direnv/issues"
@@ -22,6 +22,7 @@
         "postinstall": "node ./node_modules/vscode/bin/install",
         "lint": "node ./node_modules/tslint/bin/tslint ./src/*.ts"
     },
+    "enableProposedApi": true,
     "devDependencies": {
         "@types/node": "^10.7.1",
         "@types/mocha": "^5.2.5",

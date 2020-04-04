@@ -1,6 +1,8 @@
 'use strict';
 
-export function assign(destination: any, ...sources: any[]): any {
-    sources.forEach(source => Object.keys(source).forEach((key) => destination[key] = source[key]));
+import { EnvironmentVariableCollection } from "vscode";
+
+export function assign(destination: EnvironmentVariableCollection, ...sources: any[]): any {
+    sources.forEach(source => Object.keys(source).forEach((key) => destination.replace(key, source[key])));
     return destination;
 }
