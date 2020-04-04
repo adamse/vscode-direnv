@@ -57,6 +57,17 @@
                 "title": "direnv: allow the .envrc",
                 "description": "Allows direnv to load the .envrc."
             }
-        ]
+        ],
+        "configuration": {
+            "type": "object",
+            "title": "direnv",
+            "properties": {
+                "direnv.executablePath": {
+                    "type": "string",
+                    "default": "direnv",
+                    "description": "The location of the direnv executable"
+                }
+            }
+        }
     }
 }

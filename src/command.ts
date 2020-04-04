@@ -16,13 +16,15 @@ interface CommandExecOptions {
 export class Command {
     rootPath: string;
     rcPath: string;
-    constructor(rootPath: string) {
+    direnvExe: any;
+    constructor(direnvExe: string, rootPath: string) {
+        this.direnvExe = direnvExe;
         this.rootPath = rootPath;
         this.rcPath = path.join(rootPath, `${constants.direnv.rc}`);
     }
     // Private methods
     private exec(options: CommandExecOptions): Thenable<string> {
-        let direnvCmd = [constants.direnv.cmd, options.cmd].join(' ');
+        let direnvCmd = [this.direnvExe, options.cmd].join(' ');
         let execOptions: ExecOptions = {};
         if (options.cwd == null || options.cwd) {
             execOptions.cwd = this.rootPath;
